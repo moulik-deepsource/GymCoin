@@ -6,6 +6,6 @@ from textwrap import dedent
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 
-blockchain = Blockchain();
+blockchain = Blockchain()
 
-print(type(blockchain.generateKeys()));
+print(type(blockchain.generateKeys()))
