@@ -3,79 +3,94 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, Integ
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from gymcoin.models import User
 
+
 class RegistrationForm(FlaskForm):
 
-	name = StringField('First Name', validators=[DataRequired()],
-							render_kw={"placeholder": "Name"});
+    name = StringField(
+        "First Name", validators=[DataRequired()], render_kw={"placeholder": "Name"}
+    )
 
-	username = StringField('Username',
-						   validators=[DataRequired(), Length(min=3, max=10)],
-						   render_kw={"placeholder": "Username"});
+    username = StringField(
+        "Username",
+        validators=[DataRequired(), Length(min=3, max=10)],
+        render_kw={"placeholder": "Username"},
+    )
 
-	email = StringField('Email', validators=[DataRequired(), Email()],
-						render_kw={"placeholder": "Email"});
+    email = StringField(
+        "Email",
+        validators=[DataRequired(), Email()],
+        render_kw={"placeholder": "Email"},
+    )
 
-	password = PasswordField('Password', validators=[DataRequired()],
-							 render_kw={"placeholder": "Password"});
+    password = PasswordField(
+        "Password", validators=[DataRequired()], render_kw={"placeholder": "Password"}
+    )
 
-	confirmPassword = PasswordField('Confirm Password',
-									validators=[DataRequired(), EqualTo('password')],
-									render_kw={"placeholder": "Confirm Password"});
+    confirmPassword = PasswordField(
+        "Confirm Password",
+        validators=[DataRequired(), EqualTo("password")],
+        render_kw={"placeholder": "Confirm Password"},
+    )
 
-	submit = SubmitField('Sign Up');
+    submit = SubmitField("Sign Up")
 
-	def validate_username(self, username):
-		user = User.query.filter_by(username = username.data).first()
-		if user:
-			raise ValidationError('Username already taken. Please choose another username');
-	def validate_email(self, email):
-		email = User.query.filter_by(email = email.data).first()
-		if email:
-			raise ValidationError('Email already taken. Please choose another username');
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError(
+                "Username already taken. Please choose another username"
+            )
 
+    def validate_email(self, email):
+        email = User.query.filter_by(email=email.data).first()
+        if email:
+            raise ValidationError("Email already taken. Please choose another username")
 
 
 class LoginForm(FlaskForm):
 
-	email = StringField('Email', validators=[DataRequired(), Email()],
-						render_kw={"placeholder": "Email"});
+    email = StringField(
+        "Email",
+        validators=[DataRequired(), Email()],
+        render_kw={"placeholder": "Email"},
+    )
 
-	password = PasswordField('Password', validators=[DataRequired()],
-						render_kw={"placeholder": "Password"});
+    password = PasswordField(
+        "Password", validators=[DataRequired()], render_kw={"placeholder": "Password"}
+    )
 
-	remember = BooleanField('Remember Me');
+    remember = BooleanField("Remember Me")
 
-	submit = SubmitField('Login');
+    submit = SubmitField("Login")
+
 
 class TransactionForm(FlaskForm):
 
-	sender = StringField('Sender',
-						   validators=[DataRequired(), Length(min=3, max=10)]);
+    sender = StringField("Sender", validators=[DataRequired(), Length(min=3, max=10)])
 
+    reciever = StringField(
+        "Reciever", validators=[DataRequired(), Length(min=3, max=10)]
+    )
 
-	reciever = StringField('Reciever',
-						   validators=[DataRequired(), Length(min=3, max=10)]);
+    amount = IntegerField("Amount", validators=[DataRequired()])
 
-	amount = IntegerField('Amount', validators=[DataRequired()]);
+    key = StringField("Key", validators=[DataRequired()])
 
-	key = StringField('Key', validators=[DataRequired()]);
+    dummy = StringField("Dummy")
 
-	dummy = StringField('Dummy');
+    submit = SubmitField("Made a Transaction!")
 
-
-	submit = SubmitField('Made a Transaction!');
 
 class TransactionFormNotLoggedIn(FlaskForm):
 
-	sender = StringField('Sender');
+    sender = StringField("Sender")
 
-	reciever = StringField('Reciever');
+    reciever = StringField("Reciever")
 
-	amount = StringField('Amount');
+    amount = StringField("Amount")
 
-	key = StringField('Key');
+    key = StringField("Key")
 
-	dummy = StringField('Dummy');
+    dummy = StringField("Dummy")
 
-
-	submit = SubmitField('Sign in to make a transaction!');
+    submit = SubmitField("Sign in to make a transaction!")
